@@ -12,14 +12,14 @@ public class Memory {
         this.generateCells(blocks);
     }
 
-    private void generateCells (int blocks) {
+    private void generateCells(int blocks) {
         this.blocks = new Block[blocks];
         for (int i = 0; i < blocks; i++) {
             this.blocks[i] = new Block(8);
         }
     }
 
-    public Block[] getBlocks () {
+    public Block[] getBlocks() {
         return blocks;
     }
 }
