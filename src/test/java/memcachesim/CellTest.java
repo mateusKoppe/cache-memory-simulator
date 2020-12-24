@@ -10,42 +10,33 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CellTest {
     private Cell defaultCell;
+    private MemoryConfig memoryConfig;
 
     @BeforeEach
     void setUp() {
-        this.defaultCell = new Cell();
+        this.memoryConfig = new MemoryConfig();
+        this.defaultCell = new Cell(this.memoryConfig);
     }
 
     @Test
     void defaultValues() {
         assertEquals(this.defaultCell.getValue(), 0);
-        assertEquals(this.defaultCell.getBits(), 8);
-    }
-
-    @Test
-    void validateArgs () {
-        assertThrows(InvalidParameterException.class, () -> {
-            new Cell(-1);
-        });
     }
 
     @Test
     void throwsOutRangeValue () {
         assertDoesNotThrow(() -> {
-            this.defaultCell.setValue(100);
+            this.defaultCell.setValue(0b00000000);
+            this.defaultCell.setValue(0b01010101);
+            this.defaultCell.setValue(0b11111111);
         });
         assertThrows(CellOutRangeValueExeption.class, () -> {
-            this.defaultCell.setValue(256);
+            this.defaultCell.setValue(0b100000000);
         });
         assertThrows(CellOutRangeValueExeption.class, () -> {
-            new Cell(4).setValue(20);
+            MemoryConfig memoryConfig = new MemoryConfig();
+            memoryConfig.setBitsCellValue(3);
+            new Cell(memoryConfig).setValue(0b1010);
         });
-    }
-
-    @Test
-    void valueLimit () {
-        assertEquals(new Cell(8).getValueLimit(), 255);
-        assertEquals(new Cell(4).getValueLimit(), 15);
-        assertEquals(new Cell(2).getValueLimit(), 3);
     }
 }

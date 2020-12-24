@@ -5,6 +5,6 @@ public class Row {
     Boolean isWritten = false;
 
     Row (int cells) {
-        this.block = new Block(cells);
+        this.block = new Block(new MemoryConfig());
     }
 }

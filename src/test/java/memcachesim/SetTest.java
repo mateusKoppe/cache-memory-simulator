@@ -10,19 +10,11 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class SetTest {
     private Set set;
+    private MemoryConfig memoryConfig;
 
     @BeforeEach
     void setUp() {
-        this.set = new Set(4);
-    }
-
-    @Test
-    void validateArgs () {
-        assertDoesNotThrow(() -> {
-            new Set(4);
-        });
-        assertThrows(InvalidParameterException.class, () -> {
-            new Set(-1);
-        });
+        this.memoryConfig = new MemoryConfig();
+        this.set = new Set(this.memoryConfig);
     }
 }

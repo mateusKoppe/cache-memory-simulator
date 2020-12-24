@@ -9,20 +9,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class BlockTest {
     Block block;
+    private MemoryConfig memoryConfig;
 
     @BeforeEach
     void setUp() {
-        this.block = new Block(4);
-    }
-
-    @Test
-    void validateArgs () {
-        assertDoesNotThrow(() -> {
-            new Block(4);
-        });
-        assertThrows(InvalidParameterException.class, () -> {
-            new Block(-1);
-        });
+        this.memoryConfig = new MemoryConfig();
+        this.memoryConfig.setBitsCells(2);
+        this.block = new Block(this.memoryConfig);
     }
 
     @Test

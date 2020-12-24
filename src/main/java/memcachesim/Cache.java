@@ -3,21 +3,18 @@ package memcachesim;
 import java.security.InvalidParameterException;
 
 public class Cache {
-    private Memory memory;
+    private final MemoryConfig memoryConfig;
     private Set[] sets;
 
-    Cache (Memory memory, int sets) {
-        this.memory = memory;
-        if (sets <= 0) {
-            throw new InvalidParameterException("cells cannot be less than 1");
-        }
-        this.generateSets(sets);
+    Cache (MemoryConfig memoryConfig) {
+        this.memoryConfig = memoryConfig;
+        this.generateSets(memoryConfig);
     }
 
-    private void generateSets(int cells) {
-        this.sets = new Set[cells];
-        for (int i = 0; i < cells; i++) {
-            this.sets[i] = new Set(2);
+    private void generateSets(MemoryConfig memoryConfig) {
+        this.sets = new Set[memoryConfig.getCacheSetsAmount()];
+        for (int i = 0; i < memoryConfig.getCacheSetsAmount(); i++) {
+            this.sets[i] = new Set(memoryConfig);
         }
     }
 }

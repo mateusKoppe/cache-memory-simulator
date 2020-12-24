@@ -9,24 +9,22 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class MemoryTest {
     Memory memory;
+    private MemoryConfig memoryConfig;
 
     @BeforeEach
     void setUp() {
-        this.memory = new Memory(32);
-    }
-
-    @Test
-    void validateArgs () {
-        assertDoesNotThrow(() -> {
-            new Memory(4);
-        });
-        assertThrows(InvalidParameterException.class, () -> {
-            new Memory(-1);
-        });
+        this.memoryConfig = new MemoryConfig();
+        this.memoryConfig.setBitsBlocks(5);
+        this.memory = new Memory(this.memoryConfig);
     }
 
     @Test
     void amountOfBlocks() {
         assertEquals(this.memory.getBlocks().length, 32);
+    }
+
+    @Test
+    void accessCache() {
+        assertEquals(this.memory.getCache().getClass(), Cache.class);
     }
 }

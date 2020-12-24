@@ -3,19 +3,18 @@ package memcachesim;
 import java.security.InvalidParameterException;
 
 public class Block {
+    private final MemoryConfig memoryConfig;
     private Cell[] cells;
 
-    public Block(int cells) {
-        if (cells <= 0) {
-            throw new InvalidParameterException("cells cannot be less than 1");
-        }
-        this.generateCells(cells);
+    public Block(MemoryConfig memoryConfig) {
+        this.memoryConfig = memoryConfig;
+        this.generateCells(memoryConfig);
     }
 
-    private void generateCells (int cells) {
-        this.cells = new Cell[cells];
-        for (int i = 0; i < cells; i++) {
-            this.cells[i] = new Cell(8);
+    private void generateCells (MemoryConfig memoryConfig) {
+        this.cells = new Cell[memoryConfig.getCellsPerBlock()];
+        for (int i = 0; i < memoryConfig.getCellsPerBlock(); i++) {
+            this.cells[i] = new Cell(memoryConfig);
         }
     }
 

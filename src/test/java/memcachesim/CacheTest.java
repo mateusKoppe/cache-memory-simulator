@@ -9,20 +9,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CacheTest {
     private Cache cache;
+    private MemoryConfig memoryConfig;
 
     @BeforeEach
     void setUp() {
-        Memory memory = new Memory(16);
-        this.cache = new Cache(memory, 4);
-    }
-
-    @Test
-    void validateArgs () {
-        assertDoesNotThrow(() -> {
-            new Cache(new Memory(16),4);
-        });
-        assertThrows(InvalidParameterException.class, () -> {
-            new Cache(new Memory(16),-1);
-        });
+        this.memoryConfig = new MemoryConfig();
+        Memory memory = new Memory(this.memoryConfig);
+        this.cache = new Cache(this.memoryConfig);
     }
 }
