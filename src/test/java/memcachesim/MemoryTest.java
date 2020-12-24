@@ -27,4 +27,17 @@ class MemoryTest {
     void accessCache() {
         assertEquals(this.memory.getCache().getClass(), Cache.class);
     }
+
+    @Test
+    void writeInAddress() {
+        this.memory.writeInAddress(0b1101, 0b00100000);
+        int valueInMemory = this.memory.getBlocks()[0b11].getCells()[0b01].getValue();
+        assertEquals(valueInMemory, 0b00100000);
+    }
+
+    @Test
+    void readInAddress() {
+        this.memory.getBlocks()[0b11].getCells()[0b01].setValue(0b00100000);
+        assertEquals(this.memory.readInAddress(0b1101), 0b00100000);
+    }
 }

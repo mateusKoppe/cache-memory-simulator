@@ -22,4 +22,16 @@ class BlockTest {
     void cellsAmount() {
         assertEquals(this.block.getCells().length, 4);
     }
+
+    @Test
+    void writeInCell() {
+        this.block.writeInCell(0b10, 0b01010101);
+        assertEquals(this.block.getCells()[0b10].getValue(), 0b01010101);
+    }
+
+    @Test
+    void readInCell() {
+        this.block.getCells()[0b10].setValue(0b01010101);
+        assertEquals(this.block.readInCell(0b10), 0b01010101);
+    }
 }

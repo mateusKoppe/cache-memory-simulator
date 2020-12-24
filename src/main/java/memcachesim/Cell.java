@@ -1,7 +1,5 @@
 package memcachesim;
 
-import memcachesim.exception.CellOutRangeValueExeption;
-
 import java.security.InvalidParameterException;
 
 public class Cell {
@@ -13,10 +11,10 @@ public class Cell {
         this.memoryConfig = memoryConfig;
     }
 
-    public void setValue(int value) throws CellOutRangeValueExeption {
+    public void setValue(int value) {
         int bits = this.memoryConfig.getBitsCellValue();
         if (value < 0 || value > this.memoryConfig.getValueLimit()) {
-            throw new CellOutRangeValueExeption("value " + value + "is out of range of " + bits + " bits");
+            throw new InvalidParameterException("value " + value + "is out of range of " + bits + " bits");
         }
         this.value = value;
     }

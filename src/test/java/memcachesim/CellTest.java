@@ -1,6 +1,5 @@
 package memcachesim;
 
-import memcachesim.exception.CellOutRangeValueExeption;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -30,10 +29,10 @@ class CellTest {
             this.defaultCell.setValue(0b01010101);
             this.defaultCell.setValue(0b11111111);
         });
-        assertThrows(CellOutRangeValueExeption.class, () -> {
+        assertThrows(InvalidParameterException.class, () -> {
             this.defaultCell.setValue(0b100000000);
         });
-        assertThrows(CellOutRangeValueExeption.class, () -> {
+        assertThrows(InvalidParameterException.class, () -> {
             MemoryConfig memoryConfig = new MemoryConfig();
             memoryConfig.setBitsCellValue(3);
             new Cell(memoryConfig).setValue(0b1010);
