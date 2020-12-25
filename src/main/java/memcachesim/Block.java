@@ -19,6 +19,13 @@ public class Block {
         return this.cells[cell].getValue();
     }
 
+    public void copyBlock (Block copyBlock) {
+        for (int i = 0; i < memoryConfig.getCellsPerBlock(); i++) {
+            int value = copyBlock.getCells()[i].getValue();
+            this.cells[i].setValue(value);
+        }
+    }
+
     public Cell[] getCells() {
         return this.cells;
     }

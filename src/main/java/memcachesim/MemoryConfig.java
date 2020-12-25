@@ -26,7 +26,11 @@ public class MemoryConfig {
     }
 
     public int getRowsInSet() {
-        return (int) Math.pow(2, this.getBitsCacheRow());
+        return (int) Math.pow(2, this.getBitsCacheRow() - this.getBitsCacheSets());
+    }
+
+    public int getBitsCacheLabel() {
+        return this.bitsBlocks - this.bitsCacheSets;
     }
 
     public int getBitsCellValue() {

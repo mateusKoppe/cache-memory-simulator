@@ -11,10 +11,14 @@ public class Set {
         this.generateRows(memoryConfig);
     }
 
+    public Row[] getRows() {
+        return rows;
+    }
+
     private void generateRows (MemoryConfig memoryConfig) {
         this.rows = new Row[memoryConfig.getRowsInSet()];
         for (int i = 0; i < memoryConfig.getRowsInSet(); i++) {
-            this.rows[i] = new Row(4);
+            this.rows[i] = new Row(memoryConfig);
         }
     }
 }

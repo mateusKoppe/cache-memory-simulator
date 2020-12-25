@@ -48,10 +48,21 @@ class MemoryConfigTest {
 
     @Test
     void rowsInSet() {
-        this.memoryConfig.setBitsCacheRow(2);
+        this.memoryConfig.setBitsCacheRow(4);
+        this.memoryConfig.setBitsCacheSets(2);
         assertEquals(this.memoryConfig.getRowsInSet(), 4);
         this.memoryConfig.setBitsCacheRow(5);
-        assertEquals(this.memoryConfig.getRowsInSet(), 32);
+        assertEquals(this.memoryConfig.getRowsInSet(), 8);
+    }
+
+    @Test
+    void bitsCacheLabel() {
+        this.memoryConfig.setBitsCacheSets(2);
+        this.memoryConfig.setBitsBlocks(3);
+        assertEquals(this.memoryConfig.getBitsCacheLabel(), 1);
+        this.memoryConfig.setBitsCacheSets(4);
+        this.memoryConfig.setBitsBlocks(8);
+        assertEquals(this.memoryConfig.getBitsCacheLabel(), 4);
     }
 
     @Test

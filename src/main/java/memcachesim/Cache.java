@@ -11,6 +11,10 @@ public class Cache {
         this.generateSets(memoryConfig);
     }
 
+    public void writeInAddress(int address, int value) {
+        int set = address >> this.memoryConfig.getBitsCells();
+    }
+
     private void generateSets(MemoryConfig memoryConfig) {
         this.sets = new Set[memoryConfig.getCacheSetsAmount()];
         for (int i = 0; i < memoryConfig.getCacheSetsAmount(); i++) {
