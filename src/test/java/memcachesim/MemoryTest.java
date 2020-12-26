@@ -130,4 +130,17 @@ class MemoryTest {
     void accessCache() {
         assertEquals(this.memory.getCache().getClass(), Cache.class);
     }
+
+    @Test
+    void countMissAndHits() {
+        this.memory.readInAddress(0b110100); // H
+        this.memory.readInAddress(0b111110); // M
+        this.memory.readInAddress(0b111110); // H
+        this.memory.writeInAddress(0b111111, 0b11100011); // H
+        this.memory.readInAddress(0b100110); // M
+        this.memory.writeInAddress(0b101110, 0b11100011); // H
+        this.memory.readInAddress(0b001110); // M
+        assertEquals(this.memory.getHits(), 4);
+        assertEquals(this.memory.getMiss(), 3);
+    }
 }

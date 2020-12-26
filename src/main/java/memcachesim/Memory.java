@@ -4,6 +4,8 @@ public class Memory {
     private final MemoryConfig memoryConfig;
     private final Cache cache;
     private Block[] blocks;
+    private int hits;
+    private int miss;
 
     public Memory(MemoryConfig memoryConfig) {
         this.memoryConfig = memoryConfig;
@@ -13,15 +15,23 @@ public class Memory {
 
     public void writeInAddress(int address, int value) {
         CacheResponse response = this.cache.writeInAddress(address, value);
-        if (response.isHit()) return;
+        if (response.isHit()) {
+            this.hits++;
+            return;
+        }
 
+        this.miss++;
         this.writeInMemoryAddress(address, value);
     }
 
     public int readInAddress(int address) {
         CacheResponse response = this.cache.readInAddress(address);
-        if (response.isHit()) return response.getValue();
+        if (response.isHit()) {
+            this.hits++;
+            return response.getValue();
+        }
 
+        this.miss++;
         Block block = this.getBlockByAddress(address);
         Row row = this.cache.cacheBlock(block);
 
@@ -29,7 +39,10 @@ public class Memory {
             this.writeBlock(row.getBlock());
         }
 
-        return this.cache.readInAddress(address).getValue();
+        int cellSize = (int) Math.pow(this.memoryConfig.getBitsCells(), 2);
+        int cellAddress = address & (cellSize -1);
+
+        return block.readInCell(cellAddress);
     }
 
     public void writeInMemoryAddress(int address, int value) {
@@ -53,6 +66,14 @@ public class Memory {
     public Block getBlockByAddress(int address) {
         int block = address >> this.memoryConfig.getBitsCells();
         return  this.blocks[block];
+    }
+
+    public int getHits() {
+        return hits;
+    }
+
+    public int getMiss() {
+        return miss;
     }
 
     public Cache getCache() {
