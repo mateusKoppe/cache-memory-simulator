@@ -10,7 +10,8 @@ public class Cache {
     }
 
     public Row cacheBlock(Block block) {
-        int set = this.getLabelAddress(block.getAddress());
+        int address = block.getAddress() << this.memoryConfig.getBitsCells();
+        int set = this.getSetAddress(address);
         return this.sets[set].cacheBlock(block);
     }
 
@@ -28,13 +29,10 @@ public class Cache {
         return sets;
     }
 
-    private int getLabelAddress(int address) {
-        return address >> this.memoryConfig.getBitsCacheSets();
-    }
 
     private int getSetAddress(int address) {
         int block = address >> this.memoryConfig.getBitsCells();
-        int labelSize = (int) Math.pow(2, this.memoryConfig.getBitsCacheLabel());
+        int labelSize = (int) Math.pow(2, this.memoryConfig.getBitsCacheSets());
         return block & labelSize - 1;
     }
 

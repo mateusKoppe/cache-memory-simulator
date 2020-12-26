@@ -26,9 +26,10 @@ class CacheTest {
 
     @Test
     public void cacheBlock() {
-        Block block = new Block(this.memoryConfig, 0b1111);
+        Block block = new Block(this.memoryConfig, 0b1110);
         block.writeInCell(0b11, 0b11110000);
         assertEquals(this.cache.cacheBlock(block).getClass(), Row.class);
+        assertTrue(this.cache.getSets()[0b10].readInAddress(0b111001).isHit());
     }
 
     @Test
