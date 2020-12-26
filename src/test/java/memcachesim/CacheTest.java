@@ -3,8 +3,6 @@ package memcachesim;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.security.InvalidParameterException;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class CacheTest {
@@ -28,22 +26,22 @@ class CacheTest {
 
     @Test
     public void cacheBlock() {
-        Block block = new Block(this.memoryConfig);
+        Block block = new Block(this.memoryConfig, 0b1111);
         block.writeInCell(0b11, 0b11110000);
-        assertEquals(this.cache.cacheBlock(1111, block).getClass(), Row.class);
+        assertEquals(this.cache.cacheBlock(block).getClass(), Row.class);
     }
 
     @Test
     public void writeInAddress() {
-        assertFalse(this.cache.writeInAddress(0b011100, 0b11110000).isHit());
-        this.cache.getSets()[0b11].getRows()[0].writeInAddress(0b011100, 0b11110000);
-        assertTrue(this.cache.writeInAddress(0b011100, 0b00001111).isHit());
+        assertFalse(this.cache.writeInAddress(0b010101, 0b11110000).isHit());
+        this.cache.cacheBlock(new Block(this.memoryConfig, 0b0101));
+        assertTrue(this.cache.writeInAddress(0b010101, 0b00001111).isHit());
     }
 
     @Test
     public void readInAddress() {
-        assertFalse(this.cache.readInAddress(0b011100).isHit());
-        this.cache.getSets()[0b11].getRows()[0].writeInAddress(0b011100, 0b11110000);
-        assertTrue(this.cache.readInAddress(0b011100).isHit());
+        assertFalse(this.cache.readInAddress(0b010101).isHit());
+        this.cache.cacheBlock(new Block(this.memoryConfig, 0b0101));
+        assertTrue(this.cache.readInAddress(0b010101).isHit());
     }
 }

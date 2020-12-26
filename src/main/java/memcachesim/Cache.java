@@ -9,10 +9,9 @@ public class Cache {
         this.generateSets(memoryConfig);
     }
 
-    public Row cacheBlock(int address, Block block) {
-        int set = this.getSetAddress(address);
-        int label = this.getLabelAddress(address);
-        return this.sets[set].cacheBlock(label, block);
+    public Row cacheBlock(Block block) {
+        int set = this.getLabelAddress(block.getAddress());
+        return this.sets[set].cacheBlock(block);
     }
 
     public CacheResponse writeInAddress(int address, int value) {

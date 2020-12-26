@@ -3,7 +3,6 @@ package memcachesim;
 public class Row {
     private final MemoryConfig memoryConfig;
     private final Block block;
-    private int label = 0;
     private Boolean changed = false;
     private int score = 0;
 
@@ -24,20 +23,18 @@ public class Row {
         int cell = address & cellsInBlock -1;
         this.resetScore();
         this.changed = true;
-        this.setLabelByAddress(address);
         this.block.getCells()[cell].setValue(value);
     }
 
-    public void writeBlock(int label, Block block) {
+    public void writeBlock(Block block) {
         this.block.copyBlock(block);
-        this.label = label;
     }
 
     public boolean hasAddress(int address) {
         MemoryConfig config = this.memoryConfig;
-        int shiftSize = config.getBitsCells() + config.getBitsCacheSets();
+        int shiftSize = config.getBitsCells();
         int addressLabel = address >> shiftSize;
-        return this.label == addressLabel;
+        return this.block.getAddress() == addressLabel;
     }
 
     public void incrementScore() {
@@ -53,7 +50,9 @@ public class Row {
     }
 
     public int getLabel() {
-        return this.label;
+        MemoryConfig config = this.memoryConfig;
+        int shiftSize = config.getBitsCacheSets();
+        return this.block.getAddress() >> shiftSize;
     }
 
     public Boolean isChanged() {
@@ -62,11 +61,5 @@ public class Row {
 
     private void resetScore() {
         this.score = 0;
-    }
-
-    private void setLabelByAddress(int address) {
-        MemoryConfig config = this.memoryConfig;
-        int shiftSize = config.getBitsCells() + config.getBitsCacheSets();
-        this.label = address >> shiftSize;
     }
 }

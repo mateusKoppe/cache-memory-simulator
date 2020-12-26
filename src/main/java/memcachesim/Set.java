@@ -1,6 +1,5 @@
 package memcachesim;
 
-import java.util.Arrays;
 import java.util.Optional;
 
 public class Set {
@@ -12,7 +11,7 @@ public class Set {
         this.generateRows(memoryConfig);
     }
 
-    public Row cacheBlock(int label, Block block) {
+    public Row cacheBlock(Block block) {
         int worstI = 0;
         for (int i = 0; i < this.rows.length; i++) {
             if (this.rows[worstI].getScore() < this.rows[i].getScore()) {
@@ -21,15 +20,18 @@ public class Set {
         }
         Row worstRow = this.rows[worstI];
         Row newRow = new Row(this.memoryConfig);
-        newRow.writeBlock(label, block);
+        newRow.writeBlock(block);
         this.rows[worstI] = newRow;
         return worstRow;
     }
 
     public CacheResponse readInAddress(int address) {
+        MemoryConfig config = this.memoryConfig;
+        int shiftSize = config.getBitsCells() + config.getBitsCacheSets();
+        int label = address >> shiftSize;
         for (Row row: this.rows) {
-            if (!row.hasAddress(address)) continue;
-            this.incrementScore();
+            if (row.getLabel() != label) continue;
+            this.incrementScoreRows();
             return new CacheResponse(
               true,
               row.readInAddress(address)
@@ -41,7 +43,7 @@ public class Set {
     public CacheResponse writeInAddress(int address, int value) {
         for (Row row: this.rows) {
             if (!row.hasAddress(address)) continue;
-            this.incrementScore();
+            this.incrementScoreRows();
             row.writeInAddress(address, value);
             return new CacheResponse(true);
         }
@@ -70,7 +72,7 @@ public class Set {
         }
     }
 
-    private void incrementScore() {
+    private void incrementScoreRows() {
         for (Row row: this.rows) {
             row.incrementScore();
         }

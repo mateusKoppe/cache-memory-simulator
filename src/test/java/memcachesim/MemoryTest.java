@@ -3,8 +3,6 @@ package memcachesim;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.security.InvalidParameterException;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class MemoryTest {
@@ -21,6 +19,13 @@ class MemoryTest {
     @Test
     void amountOfBlocks() {
         assertEquals(this.memory.getBlocks().length, 32);
+    }
+
+    @Test
+    void blocksAddress() {
+        for (int i = 0; i < 32; i++) {
+            assertEquals(this.memory.getBlocks()[i].getAddress(), i);
+        }
     }
 
     @Test

@@ -12,10 +12,11 @@ class RowTest {
     @BeforeEach
     void setUp() {
         this.memoryConfig = new MemoryConfig();
-        this.memoryConfig.setBitsBlocks(5);
+        this.memoryConfig.setBitsBlocks(4);
         this.memoryConfig.setBitsCells(2);
         this.memoryConfig.setBitsCacheSets(2);
         this.row = new Row(this.memoryConfig);
+        this.row.writeBlock(new Block(this.memoryConfig, 0b1110));
         this.row.incrementScore();
     }
 
@@ -26,9 +27,9 @@ class RowTest {
 
     @Test
     void writeBlock() {
-        Block block = new Block(this.memoryConfig);
-        this.row.writeBlock(0b11, block);
-        assertEquals(this.row.getLabel(), 0b11);
+        Block block = new Block(this.memoryConfig, 0b1010);
+        this.row.writeBlock(block);
+        assertEquals(this.row.getLabel(), 0b10);
         assertNotEquals(this.row.getBlock(), block);
         for (int i = 0; i < block.getCells().length; i++) {
             assertEquals(
@@ -42,22 +43,22 @@ class RowTest {
     void readInAddress() {
         int testValue = 0b11110000;
         this.row.getBlock().getCells()[0b01].setValue(testValue);
-        int value = this.row.readInAddress(0b1110101);
+        int value = this.row.readInAddress(0b111001);
         assertEquals(value, testValue);
     }
 
     @Test
     void writeValue() {
-        this.row.writeInAddress(0b1110101, 0b11110000);
-        int value = this.row.getBlock().getCells()[0b01].getValue();
+        this.row.writeInAddress(0b111010, 0b11110000);
+        int value = this.row.getBlock().getCells()[0b10].getValue();
         assertEquals(value, 0b11110000);
     }
 
     @Test
     void hasAddress() {
-        this.row.writeInAddress(0b1110101, 0b11110000);
-        assertFalse(this.row.hasAddress(0b0100101));
-        assertTrue(this.row.hasAddress(0b1110101));
+        this.row.writeInAddress(0b111010, 0b11110000);
+        assertFalse(this.row.hasAddress(0b010010));
+        assertTrue(this.row.hasAddress(0b111010));
     }
 
     @Test

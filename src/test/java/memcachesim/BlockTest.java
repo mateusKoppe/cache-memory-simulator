@@ -3,8 +3,6 @@ package memcachesim;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.security.InvalidParameterException;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class BlockTest {
@@ -25,6 +23,13 @@ class BlockTest {
     }
 
     @Test
+    void constructors() {
+        assertEquals(this.block.getAddress(), 0b0);
+        Block addressedBlock = new Block(this.memoryConfig, 0b1010);
+        assertEquals(addressedBlock.getAddress(), 0b1010);
+    }
+
+    @Test
     void readInCell() {
         this.block.getCells()[0b10].setValue(0b01010101);
         assertEquals(this.block.readInCell(0b10), 0b01010101);
@@ -32,7 +37,8 @@ class BlockTest {
 
     @Test
     void copyBlock() {
-        Block copyBlock = new Block(this.memoryConfig);
+        Block copyBlock = new Block(this.memoryConfig, 0b1110);
+        assertNotEquals(copyBlock.getAddress(), this.block.getAddress());
         for (int i = 0; i < memoryConfig.getCellsPerBlock(); i++) {
             copyBlock.getCells()[i].setValue(0b11111111);
             this.block.getCells()[i].setValue(0b00000000);
@@ -42,6 +48,7 @@ class BlockTest {
             );
         }
         this.block.copyBlock(copyBlock);
+        assertEquals(copyBlock.getAddress(), this.block.getAddress());
         for (int i = 0; i < memoryConfig.getCellsPerBlock(); i++) {
             assertEquals(
                 this.block.getCells()[i].getValue(),

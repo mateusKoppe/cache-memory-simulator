@@ -36,7 +36,7 @@ public class Memory {
     private void generateBlocks(MemoryConfig memoryConfig) {
         this.blocks = new Block[memoryConfig.getBlocksAmount()];
         for (int i = 0; i < memoryConfig.getBlocksAmount(); i++) {
-            this.blocks[i] = new Block(memoryConfig);
+            this.blocks[i] = new Block(memoryConfig, i);
         }
     }
 }
