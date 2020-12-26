@@ -28,6 +28,11 @@ public class Row {
         this.block.getCells()[cell].setValue(value);
     }
 
+    public void writeBlock(int label, Block block) {
+        this.block.copyBlock(block);
+        this.label = label;
+    }
+
     public boolean hasAddress(int address) {
         MemoryConfig config = this.memoryConfig;
         int shiftSize = config.getBitsCells() + config.getBitsCacheSets();
@@ -51,7 +56,7 @@ public class Row {
         return this.label;
     }
 
-    public Boolean getChanged() {
+    public Boolean isChanged() {
         return changed;
     }
 

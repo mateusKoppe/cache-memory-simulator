@@ -9,6 +9,7 @@ buildNumber.properties
 .mvn/timing.properties
 .mvn/wrapper/maven-wrapper.jar
 
+.attach_*
 .settings
 .vscode
 .idea

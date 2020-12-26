@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class RowTest {
     private MemoryConfig memoryConfig;
-    private Row rowDefault;
+    private Row row;
 
     @BeforeEach
     void setUp() {
@@ -15,70 +15,76 @@ class RowTest {
         this.memoryConfig.setBitsBlocks(5);
         this.memoryConfig.setBitsCells(2);
         this.memoryConfig.setBitsCacheSets(2);
-        this.rowDefault = new Row(this.memoryConfig);
-        this.rowDefault.incrementScore();
+        this.row = new Row(this.memoryConfig);
+        this.row.incrementScore();
     }
 
     @Test
     void getBlock() {
-        assertEquals(this.rowDefault.getBlock().getClass(), Block.class);
+        assertEquals(this.row.getBlock().getClass(), Block.class);
+    }
+
+    @Test
+    void writeBlock() {
+        Block block = new Block(this.memoryConfig);
+        this.row.writeBlock(0b11, block);
+        assertEquals(this.row.getLabel(), 0b11);
+        assertNotEquals(this.row.getBlock(), block);
+        for (int i = 0; i < block.getCells().length; i++) {
+            assertEquals(
+                block.getCells()[i].getValue(),
+                this.row.getBlock().getCells()[i].getValue()
+            );
+        }
     }
 
     @Test
     void readInAddress() {
         int testValue = 0b11110000;
-        this.rowDefault.getBlock().getCells()[0b01].setValue(testValue);
-        int value = this.rowDefault.readInAddress(0b1110101);
+        this.row.getBlock().getCells()[0b01].setValue(testValue);
+        int value = this.row.readInAddress(0b1110101);
         assertEquals(value, testValue);
     }
 
     @Test
     void writeValue() {
-        this.rowDefault.writeInAddress(0b1110101, 0b11110000);
-        int value = this.rowDefault.getBlock().getCells()[0b01].getValue();
+        this.row.writeInAddress(0b1110101, 0b11110000);
+        int value = this.row.getBlock().getCells()[0b01].getValue();
         assertEquals(value, 0b11110000);
     }
 
     @Test
     void hasAddress() {
-        this.rowDefault.writeInAddress(0b1110101, 0b11110000);
-        assertFalse(this.rowDefault.hasAddress(0b0100101));
-        assertTrue(this.rowDefault.hasAddress(0b1110101));
-    }
-
-    @Test
-    void label() {
-        this.rowDefault.writeInAddress(0b1110101, 0b11110000);
-        assertEquals(this.rowDefault.getLabel(), 0b111);
-        this.rowDefault.writeInAddress(0b1000101, 0b11110000);
-        assertEquals(this.rowDefault.getLabel(), 0b100);
+        this.row.writeInAddress(0b1110101, 0b11110000);
+        assertFalse(this.row.hasAddress(0b0100101));
+        assertTrue(this.row.hasAddress(0b1110101));
     }
 
     @Test
     void scoreOnRead() {
-        assertEquals(this.rowDefault.getScore(), 1);
-        this.rowDefault.readInAddress(0b1110101);
-        assertEquals(this.rowDefault.getScore(), 0);
+        assertEquals(this.row.getScore(), 1);
+        this.row.readInAddress(0b1110101);
+        assertEquals(this.row.getScore(), 0);
     }
 
     @Test
     void scoreOnWrite() {
-        assertEquals(this.rowDefault.getScore(), 1);
-        this.rowDefault.writeInAddress(0b1110101, 0b11110000);
-        assertEquals(this.rowDefault.getScore(), 0);
+        assertEquals(this.row.getScore(), 1);
+        this.row.writeInAddress(0b1110101, 0b11110000);
+        assertEquals(this.row.getScore(), 0);
     }
 
     @Test
     void changed() {
-        assertEquals(this.rowDefault.getChanged(), false);
-        this.rowDefault.writeInAddress(0b1110101, 0b11110000);
-        assertEquals(this.rowDefault.getChanged(), true);
+        assertEquals(this.row.isChanged(), false);
+        this.row.writeInAddress(0b1110101, 0b11110000);
+        assertEquals(this.row.isChanged(), true);
     }
 
     @Test
     void incrementScore() {
-        assertEquals(this.rowDefault.getScore(), 1);
-        this.rowDefault.incrementScore();
-        assertEquals(this.rowDefault.getScore(), 2);
+        assertEquals(this.row.getScore(), 1);
+        this.row.incrementScore();
+        assertEquals(this.row.getScore(), 2);
     }
 }

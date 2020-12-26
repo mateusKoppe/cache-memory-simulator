@@ -1,7 +1,5 @@
 package memcachesim;
 
-import java.security.InvalidParameterException;
-
 public class Cache {
     private final MemoryConfig memoryConfig;
     private Set[] sets;
@@ -11,8 +9,34 @@ public class Cache {
         this.generateSets(memoryConfig);
     }
 
-    public void writeInAddress(int address, int value) {
-        int set = address >> this.memoryConfig.getBitsCells();
+    public Row cacheBlock(int address, Block block) {
+        int set = this.getSetAddress(address);
+        int label = this.getLabelAddress(address);
+        return this.sets[set].cacheBlock(label, block);
+    }
+
+    public CacheResponse writeInAddress(int address, int value) {
+        int set = this.getSetAddress(address);
+        return this.sets[set].writeInAddress(address, value);
+    }
+
+    public CacheResponse readInAddress(int address) {
+        int set = this.getSetAddress(address);
+        return this.sets[set].readInAddress(address);
+    }
+
+    public Set[] getSets() {
+        return sets;
+    }
+
+    private int getLabelAddress(int address) {
+        return address >> this.memoryConfig.getBitsCacheSets();
+    }
+
+    private int getSetAddress(int address) {
+        int block = address >> this.memoryConfig.getBitsCells();
+        int labelSize = (int) Math.pow(2, this.memoryConfig.getBitsCacheLabel());
+        return block & labelSize - 1;
     }
 
     private void generateSets(MemoryConfig memoryConfig) {
