@@ -20,8 +20,9 @@ public class Set {
         }
         Row worstRow = this.rows[worstI];
         Row newRow = new Row(this.memoryConfig);
-        newRow.writeBlock(block);
         this.rows[worstI] = newRow;
+        this.incrementScoreRows();
+        newRow.writeBlock(block);
         return worstRow;
     }
 

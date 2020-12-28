@@ -27,6 +27,7 @@ public class Row {
     }
 
     public void writeBlock(Block block) {
+        this.resetScore();
         this.block.copyBlock(block);
     }
 

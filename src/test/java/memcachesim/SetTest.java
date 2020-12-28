@@ -40,13 +40,13 @@ class SetTest {
 
     @Test
     void cacheBlockFillAll() {
-        this.smallSet.cacheBlock(new Block(this.memoryConfig, 0b101));
-        assertFalse(this.smallSet.readInAddress(0b11101).isHit());
-        assertTrue(this.smallSet.readInAddress(0b10101).isHit());
-        this.smallSet.cacheBlock(new Block(this.memoryConfig, 0b111));
-        assertTrue(this.smallSet.readInAddress(0b11101).isHit());
+        this.smallSet.cacheBlock(new Block(this.memoryConfig, 0b100));
+        assertFalse(this.smallSet.readInAddress(0b01001).isHit());
+        assertTrue(this.smallSet.readInAddress(0b10001).isHit());
         this.smallSet.cacheBlock(new Block(this.memoryConfig, 0b110));
-        assertFalse(this.smallSet.readInAddress(0b10101).isHit());
+        assertTrue(this.smallSet.readInAddress(0b11001).isHit());
+        this.smallSet.cacheBlock(new Block(this.memoryConfig, 0b110));
+        assertFalse(this.smallSet.readInAddress(0b10001).isHit());
     }
 
     @Test
@@ -69,9 +69,6 @@ class SetTest {
 
     @Test
     void incrementScoresOnRead() {
-        for (Row row: this.set.getRows()) {
-            assertEquals(row.getScore(), 0);
-        }
         this.set.readInAddress(0b110101);
         Optional<Row> readRow = this.set.getRowByLabel(0b11);
 
@@ -79,7 +76,7 @@ class SetTest {
             if (row == readRow.get()) {
                 assertEquals(row.getScore(), 0);
             } else {
-                assertEquals(row.getScore(), 1);
+                assertEquals(row.getScore(), 2);
             }
         }
     }

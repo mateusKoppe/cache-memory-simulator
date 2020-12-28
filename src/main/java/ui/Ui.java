@@ -29,8 +29,10 @@ public class Ui {
         contentPanel.addComponent(new Button("Write", new Runnable() {
             @Override
             public void run() {
-                String address = TextInputDialog.showDialog(gui, "Address", "The cell address", "000000");
-                String value = TextInputDialog.showDialog(gui, "Value", "The value", "00000000");
+                String address = TextInputDialog.showDialog(gui, "Address", "The cell address",
+                    Utils.formatBinary(0, memory.getConfig().getBitsAddress()));
+                String value = TextInputDialog.showDialog(gui, "Value", "The value",
+                    Utils.formatBinary(0));
                 memory.writeInAddress(
                         Integer.parseInt(address, 2),
                         Integer.parseInt(value, 2)
@@ -52,7 +54,8 @@ public class Ui {
         contentPanel.addComponent(new Button("Read", new Runnable() {
             @Override
             public void run() {
-                String address = TextInputDialog.showDialog(gui, "Address", "The cell address", "000000");
+                String address = TextInputDialog.showDialog(gui, "Address", "The cell address",
+                    Utils.formatBinary(0, memory.getConfig().getBitsAddress()));
                 memory.readInAddress(
                         Integer.parseInt(address, 2)
                 );

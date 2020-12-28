@@ -29,6 +29,7 @@ class RowTest {
     void writeBlock() {
         Block block = new Block(this.memoryConfig, 0b1010);
         this.row.writeBlock(block);
+        assertEquals(this.row.getScore(), 0);
         assertEquals(this.row.getLabel(), 0b10);
         assertNotEquals(this.row.getBlock(), block);
         for (int i = 0; i < block.getCells().length; i++) {
