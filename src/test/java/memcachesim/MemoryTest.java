@@ -36,10 +36,15 @@ class MemoryTest {
 
     @Test
     void writeInAddressInAddress() {
-        this.memory.writeInAddress(0b101010, 0b11110000);
         assertFalse(this.memory.getCache().readInAddress(0b101010).isHit());
-        assertEquals(
+        this.memory.writeInAddress(0b101010, 0b11110000);
+        assertTrue(this.memory.getCache().readInAddress(0b101010).isHit());
+        assertNotEquals(
             this.memory.getBlocks()[0b1010].getCells()[0b10].getValue(),
+            0b11110000
+        );
+        assertEquals(
+            this.memory.getCache().readInAddress(0b101010).getValue(),
             0b11110000
         );
     }
@@ -93,19 +98,6 @@ class MemoryTest {
                 0b01010101
         );
         assertFalse(this.memory.getCache().readInAddress(0b111110).isHit());
-    }
-
-    @Test
-    void writeInMemoryAddress() {
-        this.memory.writeInMemoryAddress(0b1101, 0b00100000);
-        int valueInMemory = this.memory.getBlocks()[0b11].getCells()[0b01].getValue();
-        assertEquals(valueInMemory, 0b00100000);
-    }
-
-    @Test
-    void readInMemoryAddress() {
-        this.memory.getBlocks()[0b11].getCells()[0b01].setValue(0b00100000);
-        assertEquals(this.memory.readInMemoryAddress(0b1101), 0b00100000);
     }
 
     @Test

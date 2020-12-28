@@ -21,7 +21,19 @@ public class Memory {
         }
 
         this.miss++;
-        this.writeInMemoryAddress(address, value);
+        Block copyBlock = this.getBlockByAddress(address);
+        Block block = new Block(memoryConfig);
+        block.copyBlock(copyBlock);
+
+        int cellSize = (int) Math.pow(this.memoryConfig.getBitsCells(), 2);
+        int cellAddress = address & (cellSize -1);
+
+        block.writeInCell(cellAddress, value);
+        Row row = this.cache.cacheBlock(block);
+
+        if (row.isChanged()) {
+            this.writeBlock(row.getBlock());
+        }
     }
 
     public int readInAddress(int address) {
@@ -43,20 +55,6 @@ public class Memory {
         int cellAddress = address & (cellSize -1);
 
         return block.readInCell(cellAddress);
-    }
-
-    public void writeInMemoryAddress(int address, int value) {
-        int block = address >> this.memoryConfig.getBitsCells();
-        int cellsInBlock = this.memoryConfig.getCellsPerBlock();
-        int cell = address & cellsInBlock -1;
-        this.blocks[block].writeInCell(cell, value);
-    }
-
-    public int readInMemoryAddress(int address) {
-        int block = address >> this.memoryConfig.getBitsCells();
-        int cellsInBlock = this.memoryConfig.getCellsPerBlock();
-        int cell = address & cellsInBlock -1;
-        return this.blocks[block].readInCell(cell);
     }
 
     public void writeBlock(Block block) {
