@@ -13,7 +13,8 @@ class BlockTest {
     void setUp() {
         this.memoryConfig = new MemoryConfig();
         this.memoryConfig.setBitsCells(2);
-        this.block = new Block(this.memoryConfig);
+        this.memoryConfig.setBitsBlocks(4);
+        this.block = new Block(this.memoryConfig, 0b0101);
     }
 
     @Test
@@ -24,7 +25,7 @@ class BlockTest {
 
     @Test
     void constructors() {
-        assertEquals(this.block.getAddress(), 0b0);
+        assertEquals(this.block.getAddress(), 0b0101);
         Block addressedBlock = new Block(this.memoryConfig, 0b1010);
         assertEquals(addressedBlock.getAddress(), 0b1010);
     }
@@ -53,6 +54,16 @@ class BlockTest {
             assertEquals(
                 this.block.getCells()[i].getValue(),
                 copyBlock.getCells()[i].getValue()
+            );
+        }
+    }
+
+    @Test
+    void passIdToCell() {
+        for (int i = 0; i < this.block.getCells().length; i++) {
+            assertEquals(
+                    this.block.getCells()[i].getAddress(),
+                (this.block.getAddress() << 2) + i
             );
         }
     }

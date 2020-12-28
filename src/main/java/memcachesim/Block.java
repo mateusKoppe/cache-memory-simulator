@@ -40,9 +40,10 @@ public class Block {
     }
 
     private void generateCells (MemoryConfig memoryConfig) {
+        int blockAddress = this.address << memoryConfig.getBitsCells();
         this.cells = new Cell[memoryConfig.getCellsPerBlock()];
         for (int i = 0; i < memoryConfig.getCellsPerBlock(); i++) {
-            this.cells[i] = new Cell(memoryConfig);
+            this.cells[i] = new Cell(memoryConfig, blockAddress + i);
         }
     }
 }

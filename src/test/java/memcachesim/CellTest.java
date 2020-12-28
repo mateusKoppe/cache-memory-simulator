@@ -23,6 +23,12 @@ class CellTest {
     }
 
     @Test
+    void getAddress() {
+        assertEquals(this.defaultCell.getAddress(), 0);
+        assertEquals(new Cell(memoryConfig, 0b010101).getAddress()  , 0b010101);
+    }
+
+    @Test
     void throwsOutRangeValue () {
         assertDoesNotThrow(() -> {
             this.defaultCell.setValue(0b00000000);

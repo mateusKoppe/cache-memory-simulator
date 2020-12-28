@@ -7,7 +7,7 @@ public class MemoryConfig {
     int bitsCacheRow = 3;
     int bitsCacheSets = 2;
 
-    MemoryConfig () {}
+    public MemoryConfig() {}
 
     public int getBlocksAmount() {
         return (int) Math.pow(2, this.bitsBlocks);

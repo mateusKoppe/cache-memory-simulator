@@ -4,11 +4,16 @@ import java.security.InvalidParameterException;
 
 public class Cell {
     private final MemoryConfig memoryConfig;
+    private final int address;
     private int value;
 
     public Cell(MemoryConfig memoryConfig) {
+        this(memoryConfig, 0);
+    }
 
+    public Cell(MemoryConfig memoryConfig, int address) {
         this.memoryConfig = memoryConfig;
+        this.address = address;
     }
 
     public void setValue(int value) {
@@ -21,5 +26,9 @@ public class Cell {
 
     public int getValue() {
         return value;
+    }
+
+    public int getAddress() {
+        return address;
     }
 }
