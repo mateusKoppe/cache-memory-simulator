@@ -21,7 +21,8 @@ public class Ui {
 
     public Panel render () {
         Panel contentPanel = new Panel(new GridLayout(2));
-        contentPanel.setSize(new TerminalSize(80, 40));
+
+        contentPanel.setSize(gui.getScreen().getTerminalSize());
 
         GridLayout gridLayout = (GridLayout) contentPanel.getLayoutManager();
         gridLayout.setHorizontalSpacing(3);
@@ -37,14 +38,6 @@ public class Ui {
                         Integer.parseInt(address, 2),
                         Integer.parseInt(value, 2)
                 );
-                Panel contentPanel = new Panel(new GridLayout(2));
-                contentPanel.setSize(new TerminalSize(80, 40));
-
-                GridLayout gridLayout = (GridLayout) contentPanel.getLayoutManager();
-                gridLayout.setHorizontalSpacing(3);
-
-                contentPanel.addComponent(new MemoryTable(memory).render());
-                contentPanel.addComponent(new CacheTable(memory.getCache()).render());
                 onRender.run();
             }
         }));
@@ -59,22 +52,14 @@ public class Ui {
                 memory.readInAddress(
                         Integer.parseInt(address, 2)
                 );
-                Panel contentPanel = new Panel(new GridLayout(2));
-                contentPanel.setSize(new TerminalSize(80, 40));
-
-                GridLayout gridLayout = (GridLayout) contentPanel.getLayoutManager();
-                gridLayout.setHorizontalSpacing(3);
-
-                contentPanel.addComponent(new MemoryTable(memory).render());
-                contentPanel.addComponent(new CacheTable(memory.getCache()).render());
                 onRender.run();
             }
         }));
 
         contentPanel.addComponent(new Label("Miss: " + this.memory.getMiss()));
 
-        contentPanel.addComponent(new MemoryTable(this.memory).render());
-        contentPanel.addComponent(new CacheTable(this.memory.getCache()).render());
+        contentPanel.addComponent(new MemoryTable(memory, gui).render());
+        contentPanel.addComponent(new CacheTable(memory.getCache(), gui).render());
         return contentPanel;
     }
 }

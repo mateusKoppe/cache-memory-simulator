@@ -23,7 +23,10 @@ public class App {
 
         try {
             final Screen screen = terminalFactory.createScreen();
+
             screen.startScreen();
+            screen.doResizeIfNecessary();
+            screen.refresh();
 
             final WindowBasedTextGUI textGUI = new MultiWindowTextGUI(screen);
 
