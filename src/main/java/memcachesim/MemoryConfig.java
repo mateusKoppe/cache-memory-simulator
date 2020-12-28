@@ -33,6 +33,10 @@ public class MemoryConfig {
         return this.bitsBlocks - this.bitsCacheSets;
     }
 
+    public int getBitsAddress() {
+        return this.bitsBlocks + this.bitsCells;
+    }
+
     public int getBitsCellValue() {
         return bitsCellValue;
     }

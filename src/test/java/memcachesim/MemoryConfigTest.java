@@ -94,4 +94,13 @@ class MemoryConfigTest {
         this.memoryConfig.setBitsCacheSets(2);
         assertEquals(this.memoryConfig.getBitsCacheSets(), 2);
     }
+
+    @Test
+    void addressBits() {
+        assertEquals(this.memoryConfig.getBitsAddress(), 7);
+        this.memoryConfig.setBitsBlocks(4);
+        assertEquals(this.memoryConfig.getBitsAddress(), 6);
+        this.memoryConfig.setBitsCells(1);
+        assertEquals(this.memoryConfig.getBitsAddress(), 5);
+    }
 }

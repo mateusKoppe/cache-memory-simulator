@@ -29,6 +29,9 @@ public class Cache {
         return sets;
     }
 
+    public MemoryConfig getConfig() {
+        return memoryConfig;
+    }
 
     private int getSetAddress(int address) {
         int block = address >> this.memoryConfig.getBitsCells();

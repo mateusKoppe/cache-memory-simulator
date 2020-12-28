@@ -143,4 +143,9 @@ class MemoryTest {
         assertEquals(this.memory.getHits(), 4);
         assertEquals(this.memory.getMiss(), 3);
     }
+
+    @Test
+    void memoryConfig() {
+        assertEquals(this.memory.getConfig().getClass(), MemoryConfig.class);
+    }
 }

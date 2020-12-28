@@ -45,4 +45,10 @@ class CacheTest {
         this.cache.cacheBlock(new Block(this.memoryConfig, 0b0101));
         assertTrue(this.cache.readInAddress(0b010101).isHit());
     }
+
+    @Test
+    void memoryConfig() {
+        assertEquals(this.cache.getConfig().getClass(), MemoryConfig.class);
+    }
+
 }

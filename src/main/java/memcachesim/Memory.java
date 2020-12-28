@@ -80,6 +80,10 @@ public class Memory {
         return cache;
     }
 
+    public MemoryConfig getConfig() {
+        return memoryConfig;
+    }
+
     public Block[] getBlocks() {
         return blocks;
     }

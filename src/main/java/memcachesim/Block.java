@@ -25,6 +25,7 @@ public class Block {
 
     public void copyBlock (Block copyBlock) {
         this.address = copyBlock.getAddress();
+        this.generateCells(memoryConfig);
         for (int i = 0; i < memoryConfig.getCellsPerBlock(); i++) {
             int value = copyBlock.getCells()[i].getValue();
             this.cells[i].setValue(value);
