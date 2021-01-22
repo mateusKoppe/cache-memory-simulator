@@ -89,7 +89,13 @@ public class Memory {
     private void generateBlocks(MemoryConfig memoryConfig) {
         this.blocks = new Block[memoryConfig.getBlocksAmount()];
         for (int i = 0; i < memoryConfig.getBlocksAmount(); i++) {
-            this.blocks[i] = new Block(memoryConfig, i);
+            Block newBlock = new Block(memoryConfig, i);
+            for (Cell cell: newBlock.getCells()) {
+                int value = (int) (Math.random() * 256);
+                cell.setValue(value);
+            }
+
+            this.blocks[i] = newBlock;
         }
     }
 }
