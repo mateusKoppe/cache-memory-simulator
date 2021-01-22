@@ -26,7 +26,7 @@ public class CacheTable {
                     cacheTable.getTableModel().addRow(
                             Utils.formatBinary(cell.getAddress(), this.cache.getConfig().getBitsAddress()),
                             Utils.formatBinary(cell.getValue()),
-                            Integer.toString(row.getScore())
+                            Utils.formatBinary(row.getScore(), 3)
                     );
                 }
             }
