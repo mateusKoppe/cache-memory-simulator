@@ -29,10 +29,11 @@ mvn test
 ### Contributors
 
 <p>
-  <a href="https://github.com/mateusKoppe">
-    <img style="border-radius:20px;" src="https://avatars.githubusercontent.com/u/12251731?s=400&u=b68b275aec43c92f8c33af9ee57570dd32db90c6&v=2" alt="koppe" width="75"/>
-  </a>
-  <a href="https://github.com/arufonsekun">
-    <img src="https://avatars.githubusercontent.com/u/19571204?s=400&u=301d98d99590a96b541279749ae76b5175047145&v=4" alt="arufonsekun" width="75" />
-  </a>
+  <a class="" data-hovercard-type="user" data-hovercard-url="/users/mateusKoppe/hovercard" data-octo-click="hovercard-link-click" data-octo-dimensions="link_type:self" href="/mateusKoppe">
+          <img class="d-block avatar-user" src="https://avatars.githubusercontent.com/u/12251731?s=64&amp;v=4" width="75" height="75" alt="@mateusKoppe">
+</a>
+ 
+  <a class="" data-hovercard-type="user" data-hovercard-url="/users/arufonsekun/hovercard" data-octo-click="hovercard-link-click" data-octo-dimensions="link_type:self" href="/arufonsekun">
+          <img class="d-block avatar-user" src="https://avatars.githubusercontent.com/u/19571204?s=64&amp;v=4" width="75" height="75" alt="@arufonsekun">
+</a>
 </p>
