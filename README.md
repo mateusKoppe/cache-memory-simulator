@@ -10,7 +10,12 @@ This project was developed as final assignment for Computer Organization class t
  - Block size: 4 cells;
  - Cache memory rows amount: 8;
  - Set size: 4 rows
- 
+
+### App preview
+
+missing
+
+
 ### Running the application
 
 Firstly install [jdk](https://www.java.com/pt-BR/download/) in your environment, and then [Apache Maven](https://maven.apache.org/download.cgi), the project/dependency manager tool used in the project. Once you get that done run the following command:
@@ -29,11 +34,11 @@ mvn test
 ### Contributors
 
 <p>
-  <a class="" data-hovercard-type="user" data-hovercard-url="/users/mateusKoppe/hovercard" data-octo-click="hovercard-link-click" data-octo-dimensions="link_type:self" href="/mateusKoppe">
-          <img class="d-block avatar-user" src="https://avatars.githubusercontent.com/u/12251731?s=64&amp;v=4" width="75" height="75" alt="@mateusKoppe">
-</a>
- 
-  <a class="" data-hovercard-type="user" data-hovercard-url="/users/arufonsekun/hovercard" data-octo-click="hovercard-link-click" data-octo-dimensions="link_type:self" href="/arufonsekun">
-          <img class="d-block avatar-user" src="https://avatars.githubusercontent.com/u/19571204?s=64&amp;v=4" width="75" height="75" alt="@arufonsekun">
-</a>
+  <a href="https://github.com/mateusKoppe">
+    <img style="border-radius:20px;" src="https://avatars.githubusercontent.com/u/12251731?s=400&u=b68b275aec43c92f8c33af9ee57570dd32db90c6&v=2" alt="koppe" width="75"/>
+  </a>
+ <a></a>
+  <a href="https://github.com/arufonsekun">
+    <img src="https://avatars.githubusercontent.com/u/19571204?s=400&u=301d98d99590a96b541279749ae76b5175047145&v=4" alt="arufonsekun" width="75" />
+  </a>
 </p>
